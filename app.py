@@ -1,7 +1,8 @@
 from PyQt5 import QtWidgets
-from ui.main import Ui_MainWindow
+from ui.main import MainWindowUi
 
-'''The application entry point'''
+
+"""The application entry point"""
 
 
 class App:
@@ -9,10 +10,10 @@ class App:
     def setup():
         import sys
         app = QtWidgets.QApplication(sys.argv)
-        MainWindow = QtWidgets.QMainWindow()
-        ui = Ui_MainWindow()
-        ui.setupUi(MainWindow)
-        MainWindow.show()
+        mainWindow = QtWidgets.QMainWindow()
+        ui = MainWindowUi()
+        ui.setupUi(mainWindow)
+        mainWindow.show()
         sys.exit(app.exec_())
 
 

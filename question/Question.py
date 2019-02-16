@@ -1,6 +1,3 @@
-# !/usr/bin/python
-# -*- coding: utf-8 -*-
-
 import copy
 import random
 
@@ -21,17 +18,12 @@ class QuestionCollection:
             return True
         return False
 
-    def __str__(self):
-        for question in self.__questions:
-            return question
-
     def __len__(self):
         return len(self.__questions)
 
 
 class QuestionBank(QuestionCollection):
-        """badly implemented Singleton to create ONE list of questions to be used in the tests
-    	    'static' methods used to populate the stock, which is an instance of BookCollection"""
+        """Singleton to create ONE list of questions to be used in the tests"""
         __instance = None
 
         @classmethod
@@ -45,11 +37,11 @@ class QuestionBank(QuestionCollection):
 class Question:
     __identifiers = []
 
-    def __init__(self, question, answer, tags=['1'], points=10, ident=''):
-        self.__question = question
-        self.__answer = answer
-        self.__tags = tags
-        self.__points = points
+    def __init__(self, question, answer, tags, points=10, ident=''):
+        self._question = question
+        self._answer = answer
+        self._points = points
+        self._tags = tags
 
         if ident:
             self._ident = ident
@@ -64,19 +56,23 @@ class Question:
     def ident(self):
         return self._ident
 
-    def get_tags(self):
-        return self.__tags
+    def getTags(self):
+        return self._tags
 
-    def set_tags(self, tags):
-        self.__tags = tags
+    def setTags(self, tags):
+        self._tags = tags
 
-    def get_points(self):
-        return self.__points
+    def getPoints(self):
+        return self._points
 
-    def set_points(self, points):
-        self.__points = points
+    def setPoints(self, points):
+        self._points = points
 
-    def make_clone(self):
+    def clone(self):
         return copy.copy(self)
 
-
+    @staticmethod
+    def stringInputToList(x):
+        """Static method that takes a string, splits on a comma and returns a list,
+        also making sure remove any empty strings from the list"""
+        return list(filter(None, [y.strip() for y in x.split(',')]))

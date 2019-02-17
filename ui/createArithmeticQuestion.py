@@ -69,7 +69,7 @@ class CreateArithmeticQuestionUi(object):
         self.label_6.setFont(font)
         self.label_6.setObjectName("label_6")
         self.retranslateUi(createArithmeticQuestion)
-        self.buttonBox.accepted.connect(self.createQuestion)
+        self.buttonBox.accepted.connect(lambda: self.createQuestion(createArithmeticQuestion))
         self.buttonBox.rejected.connect(createArithmeticQuestion.close)
         QtCore.QMetaObject.connectSlotsByName(createArithmeticQuestion)
 
@@ -92,7 +92,7 @@ class CreateArithmeticQuestionUi(object):
         self.label_5.setText(_translate("createArithmeticQuestion", "Target year group:"))
         self.label_6.setText(_translate("createArithmeticQuestion", "Create an Arithmetic Question"))
 
-    def createQuestion(self):
+    def createQuestion(self, dialog):
         # get the input values
         answer = self.answerInput.text()
         question = self.questionInput.text()
@@ -115,8 +115,13 @@ class CreateArithmeticQuestionUi(object):
         # we know that this is an arithmetic question, so can just new up an ArithmeticQuestion here.
         question = ArithmeticQuestion(question, answer, tags, points)
 
-        # # get singleton questionBank and add new question
-        QuestionBank.getInstance().add(question)
+        # get singleton questionBank, add new question and save
+        bank = QuestionBank.getInstance()
+        bank.add(question)
+        bank.save()
+
+        # close dialog
+        dialog.close()
 
 
 if __name__ == "__main__":

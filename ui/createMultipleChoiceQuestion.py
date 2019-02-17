@@ -121,7 +121,7 @@ class CreateMultipleChoiceQuestionUi(object):
         self.textBrowser_2.setObjectName("textBrowser_2")
 
         self.retranslateUi(createMultipleChoiceQuestion)
-        self.buttonBox.accepted.connect(self.createQuestion)
+        self.buttonBox.accepted.connect(lambda: self.createQuestion(createMultipleChoiceQuestion))
         self.buttonBox.rejected.connect(createMultipleChoiceQuestion.close)
         QtCore.QMetaObject.connectSlotsByName(createMultipleChoiceQuestion)
 
@@ -159,7 +159,7 @@ class CreateMultipleChoiceQuestionUi(object):
 "</style></head><body style=\" font-family:\'Ubuntu\'; font-size:11pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">There can be more than one correct answer, just seperate the values with a comma</p></body></html>"))
 
-    def createQuestion(self):
+    def createQuestion(self, dialog):
         # get the input values
         question = self.questionInput.text()
 
@@ -193,8 +193,13 @@ class CreateMultipleChoiceQuestionUi(object):
         question = AutoMarkedQuestion.createFromInput(question, choices, Question.stringInputToList(correctAnswer),
                                                       tags, points)
 
-        # # get singleton questionBank and add new question
-        QuestionBank.getInstance().add(question)
+        # get singleton questionBank, add new question and save
+        bank = QuestionBank.getInstance()
+        bank.add(question)
+        bank.save()
+
+        # close dialog
+        dialog.close()
 
 
 if __name__ == "__main__":

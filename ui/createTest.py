@@ -1,23 +1,16 @@
-# -*- coding: utf-8 -*-
-
-# Form implementation generated from reading ui file 'createTest.ui'
-#
-# Created by: PyQt5 UI code generator 5.10.1
-#
-# WARNING! All changes made in this file will be lost!
-
 from PyQt5 import QtCore, QtGui, QtWidgets
+from question.Question import QuestionBank
 
-class Ui_createQuestion(object):
-    def setupUi(self, createQuestion):
-        createQuestion.setObjectName("createQuestion")
-        createQuestion.resize(399, 591)
-        self.buttonBox = QtWidgets.QDialogButtonBox(createQuestion)
+class CreateTestUi(object):
+    def setupUi(self, createTest):
+        createTest.setObjectName("createTest")
+        createTest.resize(399, 591)
+        self.buttonBox = QtWidgets.QDialogButtonBox(createTest)
         self.buttonBox.setGeometry(QtCore.QRect(30, 550, 341, 32))
         self.buttonBox.setOrientation(QtCore.Qt.Horizontal)
         self.buttonBox.setStandardButtons(QtWidgets.QDialogButtonBox.Close|QtWidgets.QDialogButtonBox.Save)
         self.buttonBox.setObjectName("buttonBox")
-        self.label_6 = QtWidgets.QLabel(createQuestion)
+        self.label_6 = QtWidgets.QLabel(createTest)
         self.label_6.setGeometry(QtCore.QRect(30, 10, 321, 21))
         font = QtGui.QFont()
         font.setPointSize(14)
@@ -25,70 +18,95 @@ class Ui_createQuestion(object):
         font.setWeight(75)
         self.label_6.setFont(font)
         self.label_6.setObjectName("label_6")
-        self.label_2 = QtWidgets.QLabel(createQuestion)
+        self.label_2 = QtWidgets.QLabel(createTest)
         self.label_2.setGeometry(QtCore.QRect(30, 60, 81, 17))
         self.label_2.setObjectName("label_2")
-        self.testNameInput = QtWidgets.QLineEdit(createQuestion)
+        
+        self.testNameInput = QtWidgets.QLineEdit(createTest)
         self.testNameInput.setGeometry(QtCore.QRect(160, 60, 211, 21))
         self.testNameInput.setObjectName("testNameInput")
-        self.line = QtWidgets.QFrame(createQuestion)
+        
+        self.line = QtWidgets.QFrame(createTest)
         self.line.setGeometry(QtCore.QRect(30, 90, 341, 16))
         self.line.setFrameShape(QtWidgets.QFrame.HLine)
         self.line.setFrameShadow(QtWidgets.QFrame.Sunken)
         self.line.setObjectName("line")
-        self.label = QtWidgets.QLabel(createQuestion)
+        
+        self.label = QtWidgets.QLabel(createTest)
         self.label.setGeometry(QtCore.QRect(30, 110, 311, 21))
         self.label.setObjectName("label")
-        self.lineEdit = QtWidgets.QLineEdit(createQuestion)
-        self.lineEdit.setGeometry(QtCore.QRect(30, 140, 231, 25))
-        self.lineEdit.setObjectName("lineEdit")
-        self.pushButton = QtWidgets.QPushButton(createQuestion)
-        self.pushButton.setGeometry(QtCore.QRect(260, 140, 101, 25))
-        self.pushButton.setObjectName("pushButton")
-        self.listWidget = QtWidgets.QListWidget(createQuestion)
-        self.listWidget.setGeometry(QtCore.QRect(30, 180, 331, 271))
-        self.listWidget.setSelectionMode(QtWidgets.QAbstractItemView.MultiSelection)
-        self.listWidget.setObjectName("listWidget")
-        item = QtWidgets.QListWidgetItem()
-        self.listWidget.addItem(item)
-        item = QtWidgets.QListWidgetItem()
-        self.listWidget.addItem(item)
-        self.pushButton_2 = QtWidgets.QPushButton(createQuestion)
-        self.pushButton_2.setGeometry(QtCore.QRect(180, 460, 181, 25))
-        self.pushButton_2.setObjectName("pushButton_2")
-        self.label_3 = QtWidgets.QLabel(createQuestion)
+        
+        self.searchInput = QtWidgets.QLineEdit(createTest)
+        self.searchInput.setGeometry(QtCore.QRect(30, 140, 231, 25))
+        self.searchInput.setObjectName("searchInput")
+        
+        self.searchSubmit = QtWidgets.QPushButton(createTest)
+        self.searchSubmit.setGeometry(QtCore.QRect(260, 140, 101, 25))
+        self.searchSubmit.setObjectName("searchSubmit")
+        self.searchSubmit.clicked.connect(self.search)
+        
+        self.questionList = QtWidgets.QListWidget(createTest)
+        self.questionList.setGeometry(QtCore.QRect(30, 180, 331, 271))
+        self.questionList.setSelectionMode(QtWidgets.QAbstractItemView.MultiSelection)
+        self.questionList.setObjectName("questionList")
+        
+        self.addSelectedToTest = QtWidgets.QPushButton(createTest)
+        self.addSelectedToTest.setGeometry(QtCore.QRect(180, 460, 181, 25))
+        self.addSelectedToTest.setObjectName("addSelectedToTest")
+        self.addSelectedToTest.clicked.connect(self.addQuestionsToTest)
+
+        self.label_3 = QtWidgets.QLabel(createTest)
         self.label_3.setGeometry(QtCore.QRect(40, 510, 341, 31))
         self.label_3.setObjectName("label_3")
 
-        self.retranslateUi(createQuestion)
-        self.buttonBox.accepted.connect(createQuestion.accept)
-        self.buttonBox.rejected.connect(createQuestion.close)
-        QtCore.QMetaObject.connectSlotsByName(createQuestion)
+        self.retranslateUi(createTest)
+        self.buttonBox.accepted.connect(createTest.accept)
+        self.buttonBox.rejected.connect(createTest.close)
+        QtCore.QMetaObject.connectSlotsByName(createTest)
 
-    def retranslateUi(self, createQuestion):
+    def retranslateUi(self, createTest):
         _translate = QtCore.QCoreApplication.translate
-        createQuestion.setWindowTitle(_translate("createQuestion", "Dialog"))
-        self.label_6.setText(_translate("createQuestion", "Create a Test"))
-        self.label_2.setText(_translate("createQuestion", "Test Name:"))
-        self.label.setText(_translate("createQuestion", "Find questions by searching for a tag:"))
-        self.pushButton.setText(_translate("createQuestion", "Search"))
-        __sortingEnabled = self.listWidget.isSortingEnabled()
-        self.listWidget.setSortingEnabled(False)
-        item = self.listWidget.item(0)
-        item.setText(_translate("createQuestion", "item 2"))
-        item = self.listWidget.item(1)
-        item.setText(_translate("createQuestion", "item 3"))
-        self.listWidget.setSortingEnabled(__sortingEnabled)
-        self.pushButton_2.setText(_translate("createQuestion", "Add selected to Test"))
-        self.label_3.setText(_translate("createQuestion", "Once finished adding questions, save the test!"))
+        createTest.setWindowTitle(_translate("createTest", "Dialog"))
+        self.label_6.setText(_translate("createTest", "Create a Test"))
+        self.label_2.setText(_translate("createTest", "Test Name:"))
+        self.label.setText(_translate("createTest", "Find questions by searching for a tag:"))
+        self.searchSubmit.setText(_translate("createTest", "Search"))
+        __sortingEnabled = self.questionList.isSortingEnabled()
+        self.questionList.setSortingEnabled(False)
+        self.questionList.setSortingEnabled(__sortingEnabled)
+        self.addSelectedToTest.setText(_translate("createTest", "Add selected to Test"))
+        self.label_3.setText(_translate("createTest", "Once finished adding questions, save the test!"))
 
+    def search(self):
+        # get value of search input
+        term = self.searchInput.text()
+
+        # clear existing list entries
+        self.questionList.clear()
+
+        # search question bank for questions with tags matching search term
+        questions = QuestionBank.getInstance().findQuestionsByTag(term)
+
+        print(questions)
+
+        # add matching entries to list
+        for question in questions:
+            item = QtWidgets.QListWidgetItem()
+            item.setText('{} - {}'.format(question.ident, question.question))
+            # item.setData(question)
+            self.questionList.addItem(item)
+        
+    def addQuestionsToTest(self):
+        selected = self.questionList.selectedItems()
+        print(self)
+        
 
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
-    createQuestion = QtWidgets.QDialog()
-    ui = Ui_createQuestion()
-    ui.setupUi(createQuestion)
-    createQuestion.show()
+    createTest = QtWidgets.QDialog()
+    ui = CreateTestUi()
+    ui.setupUi(createTest)
+    createTest.show()
     sys.exit(app.exec_())
 

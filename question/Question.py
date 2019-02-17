@@ -1,5 +1,6 @@
 import copy
 import random
+import pickle
 
 
 class QuestionCollection:
@@ -21,6 +22,13 @@ class QuestionCollection:
     def __len__(self):
         return len(self.__questions)
 
+    def findQuestionsByTag(self, tag):
+        tagged = []
+        for question in self.__questions.values():
+            if tag in question.getTags():
+                tagged.append(question)
+        return tagged
+
 
 class QuestionBank(QuestionCollection):
         """Singleton to create ONE list of questions to be used in the tests"""
@@ -29,9 +37,18 @@ class QuestionBank(QuestionCollection):
         @classmethod
         def getInstance(cls):
             if not cls.__instance:
-                cls.__instance = QuestionBank()
+                try:
+                    with open('data/questionBank.txt', 'rb') as qb:
+                        cls.__instance = pickle.load(qb)
+                except Exception:
+                    cls.__instance = QuestionBank()
+
                 cls.__instance.__bank = QuestionCollection()
             return cls.__instance
+
+        def save(self):
+            with open('data/questionBank.txt', 'wb') as qb:
+                pickle.dump(self.__instance, qb, pickle.HIGHEST_PROTOCOL)
 
 
 class Question:
@@ -55,6 +72,10 @@ class Question:
     @property
     def ident(self):
         return self._ident
+
+    @property
+    def question(self):
+        return self._question
 
     def getTags(self):
         return self._tags

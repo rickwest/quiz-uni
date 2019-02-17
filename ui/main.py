@@ -1,6 +1,7 @@
 from PyQt5 import QtCore, QtWidgets
 from ui.createArithmeticQuestion import CreateArithmeticQuestionUi
 from ui.createMultipleChoiceQuestion import CreateMultipleChoiceQuestionUi
+from ui.createTest import CreateTestUi
 from ui.test import Ui_Test
 from ui.reviewCompletedTests import Ui_ReviewTests
 
@@ -16,8 +17,9 @@ class MainWindowUi(object):
     # define actions as 'constants' rather than just passing random strings around
     CREATE_ARITHMETIC_QUESTION = 1
     CREATE_MULTIPLE_CHOICE_QUESTION = 2
-    TAKE_A_TEST = 3
-    REVIEW_COMPLETED_TESTS = 4
+    CREATE_A_TEST = 3
+    TAKE_A_TEST = 4
+    REVIEW_COMPLETED_TESTS = 5
 
     # set up the ui
     def setupUi(self, MainWindow):
@@ -37,13 +39,18 @@ class MainWindowUi(object):
         self.createMultipleChoiceQuestionButton.setObjectName("createMultipleChoiceQuestionButton")
         self.createMultipleChoiceQuestionButton.clicked.connect(lambda: self.openDialog(self.CREATE_MULTIPLE_CHOICE_QUESTION))
 
+        self.createTestButton = QtWidgets.QPushButton(self.centralwidget)
+        self.createTestButton.setGeometry(QtCore.QRect(190, 120, 391, 31))
+        self.createTestButton.setObjectName("createTestButton")
+        self.createTestButton.clicked.connect(lambda: self.openDialog(self.CREATE_A_TEST))
+
         self.takeTestButton = QtWidgets.QPushButton(self.centralwidget)
-        self.takeTestButton.setGeometry(QtCore.QRect(190, 120, 391, 31))
+        self.takeTestButton.setGeometry(QtCore.QRect(190, 170, 391, 31))
         self.takeTestButton.setObjectName("takeTestButton")
         self.takeTestButton.clicked.connect(lambda: self.openDialog(self.TAKE_A_TEST))
 
         self.reviewTestsButton = QtWidgets.QPushButton(self.centralwidget)
-        self.reviewTestsButton.setGeometry(QtCore.QRect(190, 170, 391, 31))
+        self.reviewTestsButton.setGeometry(QtCore.QRect(190, 220, 391, 31))
         self.reviewTestsButton.setObjectName("reviewTestsButton")
         self.reviewTestsButton.clicked.connect(lambda: self.openDialog(self.REVIEW_COMPLETED_TESTS))
 
@@ -57,15 +64,21 @@ class MainWindowUi(object):
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
         self.createArithmeticQuestionButton.setText(_translate("MainWindow", "Create an Arithmetic Question"))
         self.createMultipleChoiceQuestionButton.setText(_translate("MainWindow", "Create a Multiple Choice Question"))
+        self.createTestButton.setText(_translate("MainWindow", "Create a Test"))
         self.takeTestButton.setText(_translate("MainWindow", "Take a Test"))
         self.reviewTestsButton.setText(_translate("MainWindow", "Review Completed Tests"))
 
     def openDialog(self, dialogType):
-        self.ui = None
+        # close dialog if already open
+        if hasattr(self, 'dialog'):
+            self.dialog.close()
+
         if dialogType == self.CREATE_ARITHMETIC_QUESTION:
             self.ui = CreateArithmeticQuestionUi()
         elif dialogType == self.CREATE_MULTIPLE_CHOICE_QUESTION:
             self.ui = CreateMultipleChoiceQuestionUi()
+        elif dialogType == self.CREATE_A_TEST:
+            self.ui = CreateTestUi()
         elif dialogType == self.TAKE_A_TEST:
             self.ui = Ui_Test()
         elif dialogType == self.REVIEW_COMPLETED_TESTS:

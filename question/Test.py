@@ -1,3 +1,6 @@
+# !/usr/bin/python
+# -*- coding: utf-8 -*-
+
 from question.Question import QuestionCollection
 
 

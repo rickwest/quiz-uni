@@ -14,3 +14,21 @@ All relevant data must be stored in 'pickled' objects.
 Appropriate software testing techniques should be used.
 
 ### Running the application
+
+`python app.py`
+
+might need to run with python version, for example, `I had to run python 3.6 app.py`
+
+
+
+
+
+
+changes
+
+changes to naming conventions to keep sematics clear and to more closely mirror domain specifics terminology
+
+not all classes from the class diagram have been used, but left class stubs in there for version 2 implementation if should decide to continue
+
+references
+http://manpages.ubuntu.com/manpages/trusty/man1/pyuic5.1.html

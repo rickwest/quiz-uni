@@ -1,5 +1,6 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from question.Question import QuestionBank
+from question.Test import Test
 
 class CreateTestUi(object):
     def setupUi(self, createTest):
@@ -66,7 +67,7 @@ class CreateTestUi(object):
 
     def retranslateUi(self, createTest):
         _translate = QtCore.QCoreApplication.translate
-        createTest.setWindowTitle(_translate("createTest", "Dialog"))
+        createTest.setWindowTitle(_translate("createTest", "Create a Test"))
         self.label_6.setText(_translate("createTest", "Create a Test"))
         self.label_2.setText(_translate("createTest", "Test Name:"))
         self.label.setText(_translate("createTest", "Find questions by searching for a tag:"))
@@ -87,18 +88,20 @@ class CreateTestUi(object):
         # search question bank for questions with tags matching search term
         questions = QuestionBank.getInstance().findQuestionsByTag(term)
 
-        print(questions)
-
         # add matching entries to list
         for question in questions:
             item = QtWidgets.QListWidgetItem()
             item.setText('{} - {}'.format(question.ident, question.question))
-            # item.setData(question)
+            item.setData(question.ident)
             self.questionList.addItem(item)
         
     def addQuestionsToTest(self):
+        # check whether a test exists already exits and if not create one
+        if not hasattr(self, 'test'):
+            self.test = Test()
+
         selected = self.questionList.selectedItems()
-        print(self)
+        print(selected)
         
 
 if __name__ == "__main__":

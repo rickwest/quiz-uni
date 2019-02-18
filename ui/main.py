@@ -2,8 +2,8 @@ from PyQt5 import QtCore, QtWidgets
 from ui.createArithmeticQuestion import CreateArithmeticQuestionUi
 from ui.createMultipleChoiceQuestion import CreateMultipleChoiceQuestionUi
 from ui.createTest import CreateTestUi
-from ui.test import Ui_Test
-from ui.reviewCompletedTests import Ui_ReviewTests
+from ui.listTests import ListTestsUi
+from ui.reviewCompletedTests import ReviewCompletedTestsUi
 
 
 class MainWindowUi(object):
@@ -80,9 +80,9 @@ class MainWindowUi(object):
         elif dialogType == self.CREATE_A_TEST:
             self.ui = CreateTestUi()
         elif dialogType == self.TAKE_A_TEST:
-            self.ui = Ui_Test()
+            self.ui = ListTestsUi()
         elif dialogType == self.REVIEW_COMPLETED_TESTS:
-            self.ui = Ui_ReviewTests()
+            self.ui = ReviewCompletedTestsUi()
         else:
             return False
 

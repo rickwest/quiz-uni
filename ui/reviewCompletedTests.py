@@ -1,14 +1,7 @@
-# -*- coding: utf-8 -*-
-
-# Form implementation generated from reading ui file 'reviewCompletedTests.ui'
-#
-# Created by: PyQt5 UI code generator 5.10.1
-#
-# WARNING! All changes made in this file will be lost!
-
 from PyQt5 import QtCore, QtGui, QtWidgets
 
-class Ui_ReviewTests(object):
+
+class ReviewCompletedTestsUi(object):
     def setupUi(self, ReviewTests):
         ReviewTests.setObjectName("ReviewTests")
         ReviewTests.resize(400, 300)
@@ -18,7 +11,7 @@ class Ui_ReviewTests(object):
         self.buttonBox.setStandardButtons(QtWidgets.QDialogButtonBox.Cancel|QtWidgets.QDialogButtonBox.Ok)
         self.buttonBox.setObjectName("buttonBox")
         self.label = QtWidgets.QLabel(ReviewTests)
-        self.label.setGeometry(QtCore.QRect(100, 10, 191, 61))
+        self.label.setGeometry(QtCore.QRect(100, 10, 220, 61))
         self.label.setObjectName("label")
 
         self.retranslateUi(ReviewTests)
@@ -28,15 +21,15 @@ class Ui_ReviewTests(object):
 
     def retranslateUi(self, ReviewTests):
         _translate = QtCore.QCoreApplication.translate
-        ReviewTests.setWindowTitle(_translate("ReviewTests", "Dialog"))
-        self.label.setText(_translate("ReviewTests", "Review Completed Dialog"))
+        ReviewTests.setWindowTitle(_translate("ReviewTests", "Review Completed Tests"))
+        self.label.setText(_translate("ReviewTests", "WIP - Review Completed Tests"))
 
 
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
     ReviewTests = QtWidgets.QDialog()
-    ui = Ui_ReviewTests()
+    ui = ReviewCompletedTestsUi()
     ui.setupUi(ReviewTests)
     ReviewTests.show()
     sys.exit(app.exec_())

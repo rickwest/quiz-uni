@@ -29,6 +29,9 @@ class QuestionCollection:
                 tagged.append(question)
         return tagged
 
+    def getQuestions(self):
+        return self.__questions
+
 
 class QuestionBank(QuestionCollection):
         """Singleton to create ONE list of questions to be used in the tests"""
@@ -38,15 +41,16 @@ class QuestionBank(QuestionCollection):
         def getInstance(cls):
             if not cls.__instance:
                 try:
+                    # try and load from filesystem
                     with open('data/questionBank.txt', 'rb') as qb:
                         cls.__instance = pickle.load(qb)
                 except Exception:
+                    # new up a question bank
                     cls.__instance = QuestionBank()
-
-                cls.__instance.__bank = QuestionCollection()
             return cls.__instance
 
         def save(self):
+            # pickle and save to filesystem
             with open('data/questionBank.txt', 'wb') as qb:
                 pickle.dump(self.__instance, qb, pickle.HIGHEST_PROTOCOL)
 

@@ -1,6 +1,6 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from question.Question import QuestionBank
-from question.Test import Test
+from question.Test import Test, TestBank
 
 class CreateTestUi(object):
     def setupUi(self, createTest):
@@ -61,7 +61,7 @@ class CreateTestUi(object):
         self.label_3.setObjectName("label_3")
 
         self.retranslateUi(createTest)
-        self.buttonBox.accepted.connect(createTest.accept)
+        self.buttonBox.accepted.connect(lambda: self.saveTest(createTest))
         self.buttonBox.rejected.connect(createTest.close)
         QtCore.QMetaObject.connectSlotsByName(createTest)
 
@@ -92,7 +92,6 @@ class CreateTestUi(object):
         for question in questions:
             item = QtWidgets.QListWidgetItem()
             item.setText('{} - {}'.format(question.ident, question.question))
-            item.setData(question.ident)
             self.questionList.addItem(item)
         
     def addQuestionsToTest(self):
@@ -100,9 +99,31 @@ class CreateTestUi(object):
         if not hasattr(self, 'test'):
             self.test = Test()
 
-        selected = self.questionList.selectedItems()
-        print(selected)
-        
+
+        # get idents of selected items
+        questionIdents = []
+        for item in self.questionList.selectedItems():
+            questionIdents.append([y.strip() for y in item.text().split('-')][0])
+
+        # get questions from question bank
+        questions = QuestionBank.getInstance().getQuestions()
+
+        # loop question idents and add to test
+        for ident in questionIdents:
+            self.test.add(questions[ident])
+
+    def saveTest(self, dialog):
+        if self.testNameInput.text():
+            self.test.setName(self.testNameInput.text())
+
+        # add the test we have been adding questions to the test bank in order for us to re-use later,
+        bank = TestBank.getInstance()
+        bank.add(self.test)
+        bank.save()
+
+        # close dialog
+        dialog.close()
+
 
 if __name__ == "__main__":
     import sys
